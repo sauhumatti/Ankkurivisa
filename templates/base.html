@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}Discord Game{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <div> <!-- Group left-side links -->
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('play') }}">Play</a>
+            <a href="{{ url_for('leaderboard') }}">Leaderboard</a>
+        </div>
+        <div class="user-info"> <!-- Group user info -->
+        {% if user %}
+            Logged in as {{ user.username }} (ELO: {{ user.elo_rating }}) | <a href="{{ url_for('logout') }}">Logout</a>
+        {% else %}
+            <a href="{{ url_for('login') }}">Login with Discord</a>
+        {% endif %}
+        </div>
+    </nav>
+
+    <!-- Wrap main content in a container -->
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class=flashes>
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </div> <!-- End of container -->
+
+    <!-- Optional Footer -->
+    <footer>
+        Discord Context Guesser Game
+    </footer>
+
+    <!-- JS should ideally be at the end of body -->
+    <script src="{{ url_for('static', filename='game.js') }}"></script>
+</body>
+</html>

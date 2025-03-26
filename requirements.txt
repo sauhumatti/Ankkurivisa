@@ -1,0 +1,7 @@
+Flask>=2.0
+supabase>=2.0
+python-dotenv>=0.19
+requests>=2.25
+requests-oauthlib>=1.3 # For handling OAuth
+Authlib>=1.0 # Another excellent option for OAuth, often simpler with Flask extensions
+pyjwt # Often needed by supabase-py or auth libraries

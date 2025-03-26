@@ -1,0 +1,298 @@
+/* --- Base Styles & Variables (Discord Dark Theme Inspired) --- */
+:root {
+    /* Discord Palette */
+    --primary-color: #5865F2; /* Blurple */
+    --primary-hover: #4752C4;
+    --background-color: #36393f; /* Dark grey page background */
+    --container-bg: #2f3136; /* Slightly lighter dark grey for content */
+    --input-bg: #202225; /* Darkest grey for inputs */
+    --hover-bg: #3a3c43; /* Background hover */
+    --header-bg: #202225; /* Header/Nav background */
+    --text-color: #dcddde; /* Off-white main text */
+    --text-muted: #8e9297; /* Greyer muted text */
+    --border-color: #40444b; /* Dark border/separator */
+    --text-link: #00aff4; /* Discord link blue */
+
+    --border-radius: 5px; /* Discord uses slightly tighter corners */
+    --box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); /* Darker shadow */
+
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+body {
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    margin: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* --- Layout --- */
+.container {
+    max-width: 800px;
+    margin: 20px auto; /* Centers the container */
+    padding: 25px 30px;
+    background-color: var(--container-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    flex-grow: 1; /* Allows container to fill space */
+    border: 1px solid var(--border-color); /* Add subtle border */
+}
+
+
+/* --- Navigation --- */
+nav {
+    background-color: var(--header-bg);
+    padding: 10px 20px;
+    color: var(--text-muted); /* Muted text in nav */
+    display: flex;
+    align-items: center; /* Vertically center items */
+    /* justify-content: space-between; */ /* REMOVE or COMMENT OUT this line */
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* NEW or MODIFIED styles for nav children */
+nav > div:first-child { /* Target the first div (link container) */
+    flex-grow: 1;      /* Allow this container to grow and take available space */
+    text-align: center; /* Center the inline 'a' tags within this container */
+}
+
+nav > div:first-child a { /* Style the links within the first div */
+    color: var(--text-muted);
+    text-decoration: none;
+    margin: 0 15px; /* Add horizontal margin BETWEEN links */
+    font-weight: 500;
+    transition: color 0.2s ease;
+    display: inline-block; /* Ensure margins apply correctly */
+}
+nav > div:first-child a:hover {
+    color: var(--text-color); /* Brighten on hover */
+}
+
+
+nav .user-info {
+    color: var(--text-muted);
+    flex-shrink: 0; /* Prevent user info from shrinking if space is limited */
+    /* The user info will naturally stay on the right because the first div grew */
+}
+nav .user-info a {
+    color: var(--text-muted);
+    text-decoration: underline;
+    margin-left: 5px;
+}
+nav .user-info a:hover {
+     color: var(--text-color);
+}
+
+
+/* --- Flashed Messages --- */
+.flashes { list-style: none; padding: 0; margin-bottom: 20px; }
+.flashes li {
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    border-radius: var(--border-radius);
+    border: 1px solid transparent;
+    color: #fff; /* Ensure text is white/light */
+}
+/* Adjusted flash colors for dark theme contrast */
+.flashes .error { background-color: #c73341; border-color: #a12934; }
+.flashes .success { background-color: #3ba55d; border-color: #2d7d46; }
+.flashes .info { background-color: #007bff; border-color: #0056b3; } /* Using blue */
+.flashes .warning { background-color: #faa81a; border-color: #b87d13; color: #333; } /* Darker text on yellow */
+
+/* --- Game Content --- */
+h1, h2 {
+    color: var(--text-color);
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+p {
+    margin-bottom: 15px;
+    color: var(--text-muted);
+}
+
+/* General links */
+a {
+    color: var(--text-link);
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+/* Messages Display */
+.messages {
+    margin-bottom: 25px;
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    background-color: var(--background-color); /* Darker background for message area */
+    border-radius: var(--border-radius);
+}
+.message {
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color); /* Slightly more visible separator */
+}
+.message:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+.message .author {
+    font-weight: 500; /* Standard weight */
+    color: var(--text-color); /* Default text color */
+    margin-right: 8px;
+}
+/* Optional: Add color to author based on ID hash? Too complex for now. */
+.message .content {
+    color: var(--text-color);
+}
+
+
+/* --- Form Elements --- */
+.form-group { margin-bottom: 20px; }
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-muted); /* Muted label text */
+    font-size: 0.9em;
+    text-transform: uppercase;
+}
+
+select, button {
+    padding: 10px 15px;
+    font-size: 1rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--input-bg); /* Darker border */
+    width: 100%; /* Make selects take full width */
+    box-sizing: border-box; /* Include padding and border in width */
+    background-color: var(--input-bg); /* Dark input background */
+    color: var(--text-color); /* Light text */
+}
+
+/* Style dropdown arrow (basic, browser support varies) */
+select {
+    appearance: none; /* Remove default arrow */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%238e9297%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 10px top 50%;
+    background-size: .65em auto;
+    padding-right: 30px; /* Make space for arrow */
+}
+
+
+select:focus {
+    outline: none;
+    border-color: var(--text-link); /* Use link blue for focus */
+    box-shadow: none; /* Remove default browser glow */
+}
+
+button {
+    cursor: pointer;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+button:hover {
+    background-color: var(--primary-hover);
+}
+
+.timer {
+    margin: 20px 0;
+    font-style: italic;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+/* --- Leaderboard Table --- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 25px;
+    border-radius: var(--border-radius);
+    overflow: hidden; /* Ensures border-radius clips content */
+    border: 1px solid var(--border-color);
+    background-color: var(--container-bg); /* Match container background */
+}
+
+th, td {
+    border-bottom: 1px solid var(--border-color);
+    padding: 12px 15px;
+    text-align: left;
+}
+
+th {
+    background-color: var(--header-bg); /* Dark header background */
+    font-weight: 700;
+    color: var(--text-muted); /* Muted header text */
+    text-transform: uppercase;
+    font-size: 0.9em;
+}
+
+/* Remove row striping for cleaner dark look */
+tbody tr {
+     transition: background-color 0.15s ease-in-out;
+}
+
+tbody tr:hover {
+    background-color: var(--hover-bg); /* Hover effect */
+}
+
+.current-user td {
+    font-weight: bold;
+    background-color: rgba(88, 101, 242, 0.15); /* Slightly stronger Blurple highlight */
+    color: var(--text-color); /* Ensure text is readable */
+}
+
+/* --- Footer --- */
+footer {
+    text-align: center;
+    margin-top: auto; /* Pushes footer down */
+    padding: 15px;
+    color: var(--text-muted);
+    font-size: 0.9em;
+    background-color: var(--header-bg); /* Match nav/header background */
+    border-top: 1px solid var(--border-color);
+}
+
+/* --- Add these styles to the end of static/style.css --- */
+
+/* Style for custom emojis */
+.custom-emoji {
+    width: 22px; /* Adjust size as needed */
+    height: 22px;
+    vertical-align: bottom; /* Align better with text baseline */
+    margin: 0 1px; /* Tiny spacing */
+    display: inline-block; /* Ensure it behaves like text */
+}
+
+/* Style for <image> placeholder */
+.placeholder-image {
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* Style for attachment images */
+.attachment-image {
+    max-width: 200px;
+    max-height: 150px;
+    margin: 5px 5px 0 0; /* Margin top/right */
+    border-radius: 3px;
+    vertical-align: middle;
+    display: inline-block; /* Allows multiple images side-by-side */
+    background-color: var(--input-bg); /* Placeholder background while loading */
+}
+.attachments { /* Container for attachments */
+    line-height: 0; /* Prevent extra space below images if wrapped in divs/links */
+}

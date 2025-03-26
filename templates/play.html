@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}Play Game{% endblock %}
+
+{% block content %}
+
+    <!-- Show Game Round Section -->
+    {% if messages %}
+        <h2>Guess the Context!</h2>
+        <p>Where and when were these messages sent?</p>
+
+        <div class="messages">
+            {% for message in messages %}
+            <div class="message">
+                <span class="author">{{ message.author_name }}:</span>
+                <span class="content">
+                    {% if message.content and message.content.strip() %}
+                        {# Text content exists and is not just whitespace, display it #}
+                        {{ message.content | format_emojis | safe }}
+                    {% elif message.has_attachments %} {# <--- CHANGED: Check has_attachments directly #}
+                        {# No text content (or only whitespace), but has attachments #}
+                        <span class="placeholder-image"><image></span> {# Use HTML entities for <image> display #}
+                    {% endif %}
+                    {# If no text AND no attachments, nothing will be displayed here, which is fine #}
+                </span>
+                {% if message.attachment_urls %}
+                    <div class="attachments" style="margin-top: 10px;">
+                        {% for url in message.attachment_urls %}
+                            {% if url.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.webp', '.avif')) %}
+                                <a href="{{ url }}" target="_blank" rel="noopener noreferrer" title="View full image">
+                                    <img src="{{ url }}" alt="Attachment" class="attachment-image">
+                                </a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- The Form for Guessing -->
+        <form action="{{ url_for('submit') }}" method="post" id="guess-form">
+            <!-- Year select -->
+            <div class="form-group">
+                <label for="year">Year:</label>
+                <select name="year" id="year" required>
+                    <option value="" disabled selected>Select Year</option>
+                    {% for year in possible_years %}
+                    <option value="{{ year }}">{{ year }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <!-- Channel select -->
+            <div class="form-group">
+                 <label for="channel">Channel:</label>
+                <select name="channel" id="channel" required>
+                    <option value="" disabled selected>Select Channel</option>
+                    {% for channel in possible_channels %}
+                    <option value="{{ channel }}">{{ channel }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <!-- Timer Hidden Input -->
+            {% if session.get('current_game') %}
+            <input type="hidden" id="start-time" value="{{ session['current_game']['start_time'] }}">
+            {% endif %}
+
+            <!-- ****** ADD THIS BUTTON ****** -->
+            <div class="form-group">
+                <button type="submit">Submit Guess</button>
+            </div>
+            <!-- **************************** -->
+
+        </form>
+
+    <!-- Show Start Button Section -->
+    {% else %}
+        <h2>Ready to Play?</h2>
+        <p>Click the button below to start a new round.</p>
+        <form action="{{ url_for('start_game') }}" method="post">
+            <button type="submit">Start New Game</button>
+        </form>
+    {% endif %}
+
+{% endblock %}

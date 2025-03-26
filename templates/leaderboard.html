@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Leaderboard{% endblock %}
+
+{% block content %}
+    <h2>Top Players</h2>
+    {% if users %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Player</th>
+                    <th>ELO Rating</th>
+                    <th>Games Played</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr {% if current_user and user.discord_username == current_user.username %} class="current-user" {% endif %}>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ user.discord_username }}</td>
+                    <td>{{ user.elo_rating }}</td>
+                    <td>{{ user.games_played }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No players on the leaderboard yet, or could not load data.</p>
+    {% endif %}
+{% endblock %}

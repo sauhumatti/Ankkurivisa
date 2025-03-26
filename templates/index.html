@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Welcome{% endblock %}
+{% block content %}
+    <h1>Discord Message Context Guesser</h1>
+    {% if user %}
+        <p>Welcome back, {{ user.username }}!</p>
+        <p>Your current ELO is {{ user.elo_rating }}.</p>
+        <p><a href="{{ url_for('play') }}">Click here to play!</a></p>
+    {% else %}
+        <p>Log in with Discord to play the game and track your score!</p>
+        <p><a href="{{ url_for('login') }}">Login with Discord</a></p>
+    {% endif %}
+    <p>Try to guess the Channel and Year for three consecutive messages!</p>
+{% endblock %}
