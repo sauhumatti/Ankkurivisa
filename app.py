@@ -4,7 +4,7 @@ import time
 import re # Import the regex module
 from datetime import datetime, timezone
 from dateutil.parser import isoparse
-
+from whitenoise import WhiteNoise
 from dotenv import load_dotenv
 from flask import Flask, redirect, request, session, url_for, render_template, jsonify, flash
 from markupsafe import Markup # Needed for the |safe filter in template
